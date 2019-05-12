@@ -20,6 +20,7 @@ public class ServerSentEventsConsumerServiceImpl implements ServerSentEventsCons
 
   public Flux<ServerSentEvent<String>> consume(){
     return webCLient.get()
+      .uri("/")
       .retrieve()
       .bodyToFlux(type);
   }

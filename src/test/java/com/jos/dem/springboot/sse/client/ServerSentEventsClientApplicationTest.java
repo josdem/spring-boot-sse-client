@@ -3,6 +3,7 @@ package com.jos.dem.springboot.sse.client;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.Date;
+import java.time.LocalTime;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,7 +28,12 @@ public class ServerSentEventsClientApplicationTest {
 	@Test
 	public void shouldConsumeServerSentEvents() throws Exception {
     log.info("Running: Consume server sent events: {}", new Date());
-    assertNotNull(service);
+    service.consume()
+      .subscribe(ctx ->
+          log.info("Current time: {} - Received SSE: name[{}], id [{}], content[{}] ", LocalTime.now(), ctx.event(), ctx.id(), ctx.data()),
+            error -> log.error("Error receiving SSE: {}", error),
+            () -> log.info("Completed"));
+    Thread.sleep(1000 * 30);
 	}
 
 }
