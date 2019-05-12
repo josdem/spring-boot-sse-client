@@ -30,10 +30,8 @@ public class ServerSentEventsClientApplicationTest {
     log.info("Running: Consume server sent events: {}", new Date());
     service.consume()
       .subscribe(ctx ->
-          log.info("Current time: {} - Received SSE: name[{}], id [{}], content[{}] ", LocalTime.now(), ctx.event(), ctx.id(), ctx.data()),
-            error -> log.error("Error receiving SSE: {}", error),
-            () -> log.info("Completed"));
-    Thread.sleep(1000 * 30);
+        log.info("Current time: {}, content[{}] ", LocalTime.now(), ctx.data()));
+    Thread.sleep();
 	}
 
 }
