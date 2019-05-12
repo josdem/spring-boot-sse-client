@@ -1,4 +1,4 @@
-package com.jos.dem.springboot.sse.client;
+package com.jos.dem.springboot.sse.client.service;
 
 import reactor.core.publisher.Flux;
 
