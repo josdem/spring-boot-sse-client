@@ -31,7 +31,6 @@ public class ServerSentEventsClientApplicationTest {
     service.consume()
       .subscribe(ctx ->
         log.info("Current time: {}, content[{}] ", LocalTime.now(), ctx.data()));
-    Thread.sleep();
 	}
 
 }

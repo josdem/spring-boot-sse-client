@@ -21,27 +21,18 @@ import org.slf4j.LoggerFactory;
 public class ServerSentEventsConsumerController {
 
   @Autowired
-  private WebClient webClient;
+  private ServerSentEventsConsumerService service;
 
   private Logger log = LoggerFactory.getLogger(this.getClass());
 
   @GetMapping("/")
   public String index() {
-    consumeSSE();
-    return "Consuming Events...";
-  }
-
-  @Async
-  public void consumeSSE() {
-    ParameterizedTypeReference<ServerSentEvent<String>> type = new ParameterizedTypeReference<ServerSentEvent<String>>() {};
-
-    Flux<ServerSentEvent<String>> eventStream = webClient.get()
-      .uri("/")
-      .retrieve()
-      .bodyToFlux(type);
+    Flux<ServerSentEvent<String>> eventStream = service.consume();
 
     eventStream.subscribe(ctx ->
       log.info("Current time: {}, content[{}] ", LocalTime.now(), ctx.data()));
-    }
+
+    return "Starting to consume events...";
+  }
 
 }
