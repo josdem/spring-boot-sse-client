@@ -1,13 +1,13 @@
-package com.example.springbootsseclient;
+package com.jos.dem.springboot.sse.client;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class DemoApplication {
+public class ServerSentEventsClientApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(DemoApplication.class, args);
+		SpringApplication.run(ServerSentEventsClientApplication.class, args);
 	}
 
 }
