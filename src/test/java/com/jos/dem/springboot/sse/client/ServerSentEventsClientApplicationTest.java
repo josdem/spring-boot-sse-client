@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.codec.ServerSentEvent;
 import reactor.test.StepVerifier;
 
 import java.time.Duration;
@@ -23,7 +22,7 @@ class ServerSentEventsClientApplicationTest {
 
     @Test
     @DisplayName("Consume Server Sent Event")
-    public void shouldConsumeServerSentEvents(TestInfo testInfo) throws Exception {
+    public void shouldConsumeServerSentEvents(TestInfo testInfo) {
         log.info("Running: {}", testInfo.getDisplayName());
 
         StepVerifier.create(service.consume())
