@@ -10,13 +10,12 @@ import org.junit.jupiter.api.TestInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.codec.ServerSentEvent;
-import reactor.core.publisher.Flux;
+import reactor.test.StepVerifier;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.Duration;
 
 @Slf4j
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 class ServerSentEventsClientApplicationTest {
 
@@ -25,12 +24,14 @@ class ServerSentEventsClientApplicationTest {
     @Test
     @DisplayName("Consume Server Sent Event")
     public void shouldConsumeServerSentEvents(TestInfo testInfo) throws Exception {
-        log.info("Running: Consume server sent events: {}", LocalDate.now());
+        log.info("Running: {}", testInfo.getDisplayName());
 
-        Flux<ServerSentEvent<String>> eventStream = service.consume();
-
-        eventStream.subscribe(ctx ->
-                log.info("Current time: {}, content[{}] ", LocalTime.now(), ctx.data()));
+        StepVerifier.create(service.consume())
+                .expectNextMatches(event -> event.data().contains("josdem"))
+                .thenAwait(Duration.ofSeconds(5))
+                .expectNextCount(1)
+                .thenCancel()
+                .verify();
     }
 
 }
