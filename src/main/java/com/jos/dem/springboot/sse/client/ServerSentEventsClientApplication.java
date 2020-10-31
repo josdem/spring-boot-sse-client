@@ -7,7 +7,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.codec.ServerSentEvent;
-import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 
 import java.time.LocalTime;
@@ -18,11 +17,6 @@ public class ServerSentEventsClientApplication {
 
   public static void main(String[] args) {
     SpringApplication.run(ServerSentEventsClientApplication.class, args);
-  }
-
-  @Bean
-  WebClient webClient() {
-    return WebClient.create("http://localhost:8080/");
   }
 
   @Bean
