@@ -1,15 +1,12 @@
 plugins {
-  id 'org.springframework.boot' version '2.1.5.RELEASE'
+  id 'org.springframework.boot' version '2.3.4.RELEASE'
+  id 'io.spring.dependency-management' version '1.0.10.RELEASE'
   id 'java'
 }
 
-def junitJupiterVersion = '5.4.2'
-
-apply plugin: 'io.spring.dependency-management'
-
 group = 'com.jos.dem.springboot.sse.client'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '11'
+sourceCompatibility = '13'
 
 configurations {
   compileOnly {
@@ -25,8 +22,14 @@ dependencies {
   implementation 'org.springframework.boot:spring-boot-starter-webflux'
   compileOnly 'org.projectlombok:lombok'
   annotationProcessor 'org.projectlombok:lombok'
-  testImplementation 'org.springframework.boot:spring-boot-starter-test'
+  testImplementation('org.springframework.boot:spring-boot-starter-test') {
+    exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+  }
   testImplementation 'io.projectreactor:reactor-test'
-  testCompile "org.junit.jupiter:junit-jupiter-api:$junitJupiterVersion"
-  testRuntime "org.junit.jupiter:junit-jupiter-engine:$junitJupiterVersion"
+  testCompileOnly 'org.projectlombok:lombok'
+  testAnnotationProcessor "org.projectlombok:lombok"
+}
+
+test {
+  useJUnitPlatform()
 }
